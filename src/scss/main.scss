@@ -1,0 +1,53 @@
+:root {
+  font-size: 10px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.shadow {
+  display: flex;
+  background-color: green;
+  min-height: 100vh;
+  width: 100vw;
+  max-width: 100vw;
+}
+
+.form-container {
+  padding: 0 2rem;
+  background-color: blue;
+  margin: auto;
+  width: 100vw;
+  max-width: 40rem;
+}
+
+.input__container {
+  width: 100%;
+  margin: 2rem 0;
+  border-radius: 5px;
+  position: relative;
+
+  &--short {
+    display: inline-block;
+    width: calc(50% - 1rem);
+  }
+}
+
+.input__label {
+  font-size: 2rem;
+}
+
+.text-input {
+  padding: 0.5rem;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  font-size: 2rem;
+  border-radius: 5px;
+}
+
+.button {
+  border-radius: 5px;
+}
+
+.button--submit {
+  font-size: 2rem;
+}

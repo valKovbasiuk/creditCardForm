@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/modern-normalize@0.5.0/modern-normalize.min.css"
+    />
+    <link rel="stylesheet" href="./css/main.css" />
+
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div class="shadow">
+      <div class="form-container">
+        <form class="js-form form" action="submit">
+          <div class="input__container">
+            <label class="input__label">
+              Card number
+              <input
+                class="text-input  js-validate js-format"
+                type="text"
+                placeholder="Card number"
+                required
+              />
+            </label>
+          </div>
+          <div class="input__container input__container--short">
+            <label class="input__label"
+              >EXP.
+              <input
+                class="text-input js-validate js-format"
+                type="text"
+                placeholder="Expiration MM/YY"
+                name="expiration"
+                required
+              />
+            </label>
+          </div>
+          <div class="input__container  input__container--short">
+            <label class="input__label"
+              >CVV
+              <input
+                class="text-input js-validate js-format"
+                type="text"
+                placeholder="CVV"
+                name="cvv"
+                required
+              />
+            </label>
+          </div>
+
+          <div class="input__container">
+            <label class="input__label"
+              ><input type="checkbox" name="store-card" />Store card
+            </label>
+          </div>
+          <div class="input__container">
+            <label class="input__label"
+              >Email
+              <input
+                class="text-input js-validate"
+                type="email"
+                placeholder="email"
+                name="email"
+              />
+            </label>
+          </div>
+          <div class="input__container">
+            <button class="button button--submit">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="./js/app.js"></script>
+  </body>
+</html>
