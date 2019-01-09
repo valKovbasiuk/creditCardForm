@@ -10,11 +10,11 @@
     />
     <link rel="stylesheet" href="./css/main.css" />
 
-    <title>Document</title>
+    <title>New credit card</title>
   </head>
 
   <body>
-    <div class="shadow">
+    <div class="modal">
       <div class="form-container">
         <form class="js-form form" action="submit">
           <div class="input__container">
@@ -24,42 +24,55 @@
                 class="text-input  js-validate js-format"
                 type="text"
                 placeholder="Card number"
+                id="card-number"
+                maxlength="19"
+                autofocus
                 required
               />
+              <span class="message">Card number should contain 16 digits</span>
             </label>
           </div>
-          <div class="input__container input__container--short">
-            <label class="input__label"
-              >EXP.
-              <input
-                class="text-input js-validate js-format"
-                type="text"
-                placeholder="Expiration MM/YY"
-                name="expiration"
-                required
-              />
-            </label>
-          </div>
-          <div class="input__container  input__container--short">
-            <label class="input__label"
-              >CVV
-              <input
-                class="text-input js-validate js-format"
-                type="text"
-                placeholder="CVV"
-                name="cvv"
-                required
-              />
-            </label>
+          <div class="input__wrapper--flex">
+            <div class="input__container input__container--short">
+              <label class="input__label"
+                >EXP.
+                <input
+                  class="text-input js-validate js-format"
+                  type="text"
+                  placeholder="Expiration MM/YY"
+                  name="expiration"
+                  maxlength="5"
+                  id="expiration"
+                  required
+                />
+                <span class="message">Date of expiration MM/YY</span>
+              </label>
+            </div>
+            <div class="input__container  input__container--short">
+              <label class="input__label"
+                >CVV
+                <input
+                  class="text-input js-validate js-format"
+                  type="text"
+                  placeholder="CVV"
+                  name="cvv"
+                  maxlength="3"
+                  id="cvv"
+                  required
+                />
+                <span class="message">3 digits of CVV code</span>
+              </label>
+            </div>
           </div>
 
           <div class="input__container">
             <label class="input__label"
-              ><input type="checkbox" name="store-card" />Store card
+              ><input type="checkbox" name="store-card" id="store-card" /> Store
+              the card
             </label>
           </div>
           <div class="input__container">
-            <label class="input__label"
+            <label class="input__label hidden" id="store-card-email"
               >Email
               <input
                 class="text-input js-validate"
@@ -67,14 +80,22 @@
                 placeholder="email"
                 name="email"
               />
+              <span class="message"
+                >Please enter a valid email to save the card</span
+              >
             </label>
           </div>
           <div class="input__container">
-            <button class="button button--submit">Submit</button>
+            <button class="button button--submit button--disabled">
+              Submit
+            </button>
           </div>
         </form>
       </div>
     </div>
-    <script src="./js/app.js"></script>
+    <div class="preloader preloader--hidden">
+      <div class="preloader__anime"></div>
+    </div>
+    <script src="./js/app.js" defer></script>
   </body>
 </html>

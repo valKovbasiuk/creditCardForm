@@ -3,51 +3,163 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.shadow {
-  display: flex;
-  background-color: green;
+input[type="text"]:focus,
+input[type="email"]:focus {
+  outline: none;
+  background-color: lightgoldenrodyellow;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.modal {
   min-height: 100vh;
   width: 100vw;
   max-width: 100vw;
 }
 
 .form-container {
-  padding: 0 2rem;
-  background-color: blue;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem 2rem;
   margin: auto;
   width: 100vw;
-  max-width: 40rem;
+  max-width: 50rem;
+}
+
+.form {
+  text-align: center;
+}
+
+.input__wrapper--flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .input__container {
+  text-align: left;
   width: 100%;
-  margin: 2rem 0;
+  margin: 3rem 0;
   border-radius: 5px;
   position: relative;
+  min-width: 18.5rem;
 
   &--short {
     display: inline-block;
-    width: calc(50% - 1rem);
+    width: calc(50% - 1.5rem);
   }
 }
 
+.text-input,
 .input__label {
   font-size: 2rem;
+  padding: 1rem;
 }
 
 .text-input {
-  padding: 0.5rem;
+  border-style: solid;
   width: 100%;
   position: absolute;
   left: 0;
-  font-size: 2rem;
+  // font-size: 2rem;
   border-radius: 5px;
 }
 
 .button {
+  width: 100%;
   border-radius: 5px;
+  margin: 0;
+  &--submit {
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    background-color: #2ee59d;
+    font-size: 2rem;
+  }
+  &:disabled {
+    background-color: grey;
+  }
 }
 
-.button--submit {
-  font-size: 2rem;
+.error {
+  border: 2px solid red;
+}
+
+.valid {
+  border: 2px solid green;
+}
+
+.message {
+  text-align: left;
+  visibility: hidden;
+  color: red;
+  font-size: 1.2rem;
+  line-height: 1rem;
+  position: absolute;
+  left: 0;
+  top: -2rem;
+  padding-left: 1rem;
+}
+
+.error ~ .message {
+  visibility: visible;
+}
+
+// preloader
+
+.preloader {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  height: 100vh;
+  width: 100vw;
+  background-color: #ffffff;
+  opacity: 0.9;
+
+  &--hidden {
+    display: none;
+  }
+}
+
+.preloader__anime {
+  margin: auto;
+  width: 6rem;
+  height: 6rem;
+  background-color: #333;
+
+  -webkit-animation: rotator 1.2s infinite ease-in-out;
+  animation: rotator 1.2s infinite ease-in-out;
+}
+
+@-webkit-keyframes rotator {
+  0% {
+    -webkit-transform: perspective(18rem);
+  }
+  50% {
+    -webkit-transform: perspective(18rem) rotateY(180deg);
+  }
+  100% {
+    -webkit-transform: perspective(18rem) rotateY(180deg) rotateX(180deg);
+  }
+}
+
+@keyframes rotator {
+  0% {
+    transform: perspective(18rem) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(18rem) rotateX(0deg) rotateY(0deg);
+  }
+  50% {
+    transform: perspective(18rem) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(18rem) rotateX(-180.1deg) rotateY(0deg);
+  }
+  100% {
+    transform: perspective(18rem) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(18rem) rotateX(-180deg) rotateY(-179.9deg);
+  }
 }
