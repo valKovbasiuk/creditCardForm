@@ -7,8 +7,9 @@ input[type="email"]:focus {
   outline: none;
   background-color: lightgoldenrodyellow; }
 
-.hidden {
-  visibility: hidden; }
+.hidden,
+.hidden * {
+  visibility: hidden !important; }
 
 .modal {
   min-height: 100vh;
@@ -59,7 +60,8 @@ input[type="email"]:focus {
 .button {
   width: 100%;
   border-radius: 5px;
-  margin: 0; }
+  margin: 0;
+  margin-top: 3rem; }
   .button--submit {
     color: white;
     padding: 1rem 2rem;
@@ -70,7 +72,7 @@ input[type="email"]:focus {
     background-color: grey; }
 
 .error {
-  border: 2px solid red; }
+  border: 2px solid red !important; }
 
 .valid {
   border: 2px solid green; }

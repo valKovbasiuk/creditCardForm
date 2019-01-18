@@ -2,6 +2,11 @@
   jsForm();
 
   function jsForm() {
+    const classJsValidation = "js-validate";
+    const jsForm = document.querySelector("form.js-form");
+    var jsValidationFields = jsForm.querySelectorAll(`.${classJsValidation}`);
+    let isFormValidated;
+
     // CSS classes
     const inputValidationErrorClass = "error";
     const inputValidationValidClass = "valid";
@@ -33,15 +38,20 @@
     forms.forEach(element => element.setAttribute("novalidate", "true"));
 
     // toggle email field to store card
-    storeCardToggle.addEventListener("click", () => {
+    storeCardToggle.addEventListener("click", ev => {
       if (
         storeCardToggle.checked &&
         storeCardEmail.classList.contains(classHidden)
       ) {
         storeCardEmail.classList.remove(classHidden);
+        storeCardEmailField.classList.add(classJsValidation);
+        jsValidationFields = jsForm.querySelectorAll(`.${classJsValidation}`);
+        validateForm();
       } else {
         if (!storeCardEmail.classList.contains(classHidden)) {
           storeCardEmail.classList.add(classHidden);
+          storeCardEmailField.classList.remove(classJsValidation);
+          jsValidationFields = jsForm.querySelectorAll(`.${classJsValidation}`);
         }
       }
     });
@@ -61,8 +71,8 @@
     cardNumberField.addEventListener("input", validateCardNumber);
     function validateCardNumber(ev) {
       let number = ev.target.value.replace(/\D/g, "");
+      let result = false;
       if (number.length === 16) {
-        // console.log("card number length is 16 " + number);
         let sum = 0;
 
         for (let i = number.length - 1; i >= 0; i--) {
@@ -78,9 +88,14 @@
             }
           }
         }
-        // console.log("sum is " + sum);
-        return sum % 10 === 0;
+        result = sum % 10 === 0;
       }
+      changeClass(
+        ev.target,
+        result,
+        inputValidationValidClass,
+        inputValidationErrorClass
+      );
     }
 
     // format expiration date field
@@ -96,6 +111,7 @@
     // validate expiration date field
     expiration.addEventListener("input", validateExpDate);
     function validateExpDate(ev) {
+      let result = false;
       if (ev.target.value.length === 5) {
         let inputArr = ev.target.value.split("/");
         let currentDate = new Date(Date.now());
@@ -105,44 +121,51 @@
         let inputYear = parseInt(inputArr[1]);
 
         if (inputMonth > 12 || inputMonth < 1) {
-          return false;
+          result = false;
         } else {
-          return (
+          result =
             (currentYear === inputYear && currentMonth <= inputMonth) ||
-            inputYear > currentYear
-          );
+            inputYear > currentYear;
         }
       }
+
+      changeClass(
+        ev.target,
+        result,
+        inputValidationValidClass,
+        inputValidationErrorClass
+      );
     }
 
-    // format CVV field
-    cvv.addEventListener("input", formatCvv);
-    function formatCvv(ev) {
+    // validate CVV field
+    cvv.addEventListener("input", validateCvv);
+    function validateCvv(ev) {
+      let result = false;
       ev.target.value = ev.target.value.replace(/\D/g, "");
+      if (ev.target.value.length === 3) {
+        result = true;
+      }
+
+      changeClass(
+        ev.target,
+        result,
+        inputValidationValidClass,
+        inputValidationErrorClass
+      );
     }
-
-    // validate CVV
-
-    // const inputRequired = document.querySelectorAll("input[required]");
-    // const expirationField = document.querySelector("input[type='email']");
-    // const cvvField = document.querySelector("input[type='password'][required]");
 
     storeCardEmailField.addEventListener("input", function(ev) {
-      console.log("email input detected");
-      validateInput();
+      validateEmail();
     });
 
     submitButton.addEventListener("click", submitForm);
 
     function submitForm(ev) {
-      // console.log("clicked");
       ev.preventDefault();
-      // if (validateInput()) {
       if (true) {
         sendData();
         submitButton.disabled = true;
 
-        // console.log("success!!!");
       }
     }
 
@@ -150,37 +173,58 @@
       preloader.classList.toggle(preloaderHidden);
       setTimeout(() => {
         preloader.classList.toggle(preloaderHidden);
-        alert("All done!");
+        alert("Your card successfully submitted!");
       }, 2000);
-    }
-
-    function validateInput() {
-      validateEmail();
-      if (validateEmail()) {
-        submitButton.disabled = false;
-        return true;
-      } else {
-        submitButton.disabled = true;
-        return false;
-      }
     }
 
     function validateEmail() {
       const emailRe = new RegExp(
         /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
       );
-      if (
-        // storeCardEmail.value.trim() === "" ||
-        !emailRe.test(storeCardEmailField.value.trim())
-      ) {
-        !storeCardEmailField.classList.contains(inputValidationErrorClass) &&
+      if (!emailRe.test(storeCardEmailField.value.trim())) {
+        (!storeCardEmailField.classList.contains(inputValidationErrorClass) &&
+          storeCardEmailField.classList.remove(inputValidationValidClass)) ||
           storeCardEmailField.classList.add(inputValidationErrorClass);
-        return false;
       } else {
         storeCardEmailField.value = storeCardEmailField.value.trim();
         storeCardEmailField.classList.remove(inputValidationErrorClass);
         storeCardEmailField.classList.add(inputValidationValidClass);
-        return true;
+      }
+    }
+
+    // check if all validated
+    jsForm.addEventListener("input", validateForm);
+
+    function validateForm() {
+      let isFieldsValid = [];
+      jsValidationFields.forEach(element => {
+        isFieldsValid.push(
+          element.classList.contains(inputValidationValidClass)
+        );
+      });
+
+      if (isFieldsValid.every(field => field)) {
+        submitButton.disabled = false;
+      } else {
+        submitButton.disabled = true;
+      }
+    }
+
+    function changeClass(element, outcome, trueClass, falseClass) {
+      if (outcome) {
+        if (!element.classList.contains(trueClass)) {
+          element.classList.add(trueClass);
+        }
+        if (element.classList.contains(falseClass)) {
+          element.classList.remove(falseClass);
+        }
+      } else {
+        if (!element.classList.contains(falseClass)) {
+          element.classList.add(falseClass);
+        }
+        if (element.classList.contains(trueClass)) {
+          element.classList.remove(trueClass);
+        }
       }
     }
   }
